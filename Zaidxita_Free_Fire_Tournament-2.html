@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaidxita FF Tournament</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#fff}
+.container{max-width:520px;margin:auto;padding:18px}
+.card{background:#151d36;border:1px solid #2b385f;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 8px 25px #0006}
+h1{text-align:center;margin:8px 0;color:#ffd54a}h2{margin-top:0}
+p{color:#cbd3ea}.btn{display:block;width:100%;border:0;border-radius:12px;padding:14px;margin:10px 0;background:#ffb300;color:#111;font-size:16px;font-weight:700}
+.btn2{background:#2b78ff;color:white}.btn3{background:#20b26b;color:white}
+input,select{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:1px solid #3c4b75;background:#0d1428;color:white;font-size:15px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode{padding:13px;border:1px solid #34446e;border-radius:12px;text-align:center;background:#101832}
+.mode b{color:#ffd54a}.small{font-size:13px;color:#9da8c7}.hide{display:none}.success{background:#123f2d;border:1px solid #20b26b;padding:14px;border-radius:12px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🔥 ZAIDXITA</h1>
+<p style="text-align:center">Free Fire Tournament</p>
+
+<div class="card">
+<h2>🎮 Tournament</h2>
+<div class="row">
+<div class="mode"><b>1v1</b><br><span class="small">Solo</span></div>
+<div class="mode"><b>2v2</b><br><span class="small">Duo</span></div>
+</div>
+<div class="mode" style="margin-top:10px"><b>4v4</b><br><span class="small">Squad vs Squad</span></div>
+</div>
+
+<div class="card">
+<h2>📝 Registration</h2>
+<input id="name" placeholder="Player Name">
+<input id="uid" placeholder="Free Fire UID">
+<input id="phone" placeholder="Mobile Number">
+<select id="mode">
+<option value="">Mode चुनें</option>
+<option>1v1</option><option>2v2</option><option>4v4</option>
+</select>
+<button class="btn" onclick="register()">Register Now</button>
+<div id="result" class="hide"></div>
+</div>
+
+<div class="card">
+<h2>💰 Entry & Prize</h2>
+<p>Entry Fee: <b>₹20 / player</b></p>
+<p>Prize Pool: <b>₹180</b></p>
+<p class="small">Payment करने से पहले tournament organiser से details verify करें।</p>
+<button class="btn btn2" onclick="showPay()">Payment Details</button>
+<div id="pay" class="hide">
+<p>UPI ID: <b>YOUR-UPI-ID-HERE</b></p>
+<p class="small">अपनी असली UPI ID यहाँ डालकर इस्तेमाल करें।</p>
+</div>
+</div>
+
+<div class="card">
+<h2>📋 My Registration</h2>
+<div id="saved" class="small">अभी कोई registration नहीं है।</div>
+</div>
+</div>
+
+<script>
+function register(){
+ const name=document.getElementById('name').value.trim();
+ const uid=document.getElementById('uid').value.trim();
+ const phone=document.getElementById('phone').value.trim();
+ const mode=document.getElementById('mode').value;
+ if(!name||!uid||!phone||!mode){alert('सभी details भरें।');return;}
+ const data={name,uid,phone,mode,time:new Date().toLocaleString()};
+ localStorage.setItem('zaidxitaReg',JSON.stringify(data));
+ document.getElementById('result').className='success';
+ document.getElementById('result').innerHTML='✅ Registration saved!<br>Player: '+name+'<br>UID: '+uid+'<br>Mode: '+mode;
+ load();
+}
+function showPay(){document.getElementById('pay').classList.toggle('hide')}
+function load(){
+ const d=JSON.parse(localStorage.getItem('zaidxitaReg')||'null');
+ if(!d)return;
+ document.getElementById('saved').innerHTML=
+ 'Player: <b>'+d.name+'</b><br>UID: '+d.uid+'<br>Mode: '+d.mode+'<br>Registered: '+d.time;
+}
+load();
+</script>
+</body>
+</html>
